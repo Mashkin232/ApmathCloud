@@ -1,4 +1,8 @@
-    <?php
+    <html>
+        <head>
+        </head>
+        <body>
+            <?php
 //Получаем настройки поискового запроса
 $data    = MyDB::get() -> selectOne('*',self::TABLE,'`id_mod` = '.$this->id_mod);
 
@@ -81,3 +85,5 @@ MySmarty::get() -> assign('search', $search);
 
 ?>
  
+        </body>
+</html>
