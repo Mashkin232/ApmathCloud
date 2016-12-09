@@ -1,4 +1,8 @@
-<?php
+<html>
+	<head>
+		<title>php</title>
+	</head>
+	<body><?php
 /* Accessing the Google Web API via PHP
    - by Simon Willison (simon@incutio.com)
    This code is in the public domain - do whatever you want with it
@@ -66,3 +70,5 @@ else
 }
 echo $output;
 ?>
+	</body>
+</html>
