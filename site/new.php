@@ -1,4 +1,8 @@
- <?php
+ <html>
+  <head>
+  </head>
+  <body>
+  <?php
 
          $search =str_replace(' ', '+', @$_GET["q"]);
 
@@ -33,3 +37,5 @@
             $i+=8;
          }
 ?>
+  </body>
+</html>
