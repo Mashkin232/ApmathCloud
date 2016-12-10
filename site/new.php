@@ -16,7 +16,7 @@
 
             echo "<b>Result ".($x+1)."</b>";
             echo "<br>URL: ";
-            ?>
+           
             <a href="<?php echo $json->responseData->results[$x]->url; ?>" target="_blank"> <?php echo $json->responseData->results[$x]->url; ?> </a>
             <?php
             echo "<br>VisibleURL: ";
