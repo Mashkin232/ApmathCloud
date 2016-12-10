@@ -1,8 +1,4 @@
-<html>
-  <head>
-    <title> php</title>
-  </head>
-  <body>
+
    
     <?php
 //Получаем настройки поискового запроса
