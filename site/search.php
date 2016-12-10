@@ -10,7 +10,7 @@ PhpFiddle Initial Code
 	<form action="poisk.php" method="post">
 	<table> <tr>
 			<td style="border:0px" colspan="2"><input value="" name="poisk">
-			<button><font size=+1>Поиск</font></button>
+			<button><font >Поиск</font></button>
 			</td>	
 		</tr>
 	</table>
