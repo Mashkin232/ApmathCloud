@@ -4,7 +4,7 @@
   </head>
   <body>
     <?php 
-    echo "hello world";
+    echo '<p>hello world</p>';
     ?>
     <?php
 //Получаем настройки поискового запроса
