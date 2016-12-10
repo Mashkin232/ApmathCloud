@@ -1,4 +1,4 @@
 <?php
-$value = $_GET['poisk'];
+$value = $_POST['poisk'];
 echo $value;
 ?>
