@@ -8,7 +8,7 @@
     ?>
     <?php
 //Получаем настройки поискового запроса
-$data    = MyDB::get() -> selectOne('*',self::TABLE,'`id_mod` = '.$this->id_mod);
+//$data    = MyDB::get() -> selectOne('*',self::TABLE,'`id_mod` = '.$this->id_mod);
 
 //На каком сайте ищем?
 $sireUrl = $data['url'];
