@@ -139,7 +139,8 @@ $results->totalResults = $request_info->totalResults;
 $results->results = []; 
 if (isset($response->items)) { 
 foreach ($response->items as $result) { 
-$results->results[] = (object) [ 
+
+$results->results[] = (array) [ 
 'title' => $result->title, 
 'snippet' => $result->snippet, 
 'htmlSnippet' => $result->htmlSnippet, 
@@ -173,7 +174,10 @@ return $result;
 } 
 $search = new GoogleCustomSearch('012801828530494578547:7ddq3fkh7ew', 'AIzaSyD7Vffkn2jWpPwwfSwHrVhMH4dBHGSl_AA'); 
 $results = $search->search('Apples'); 
-echo serialize($results); 
+foreach ($results->results as $result) { 
+echo $result['link']; 
+} 
+
 ?> 
 </body> 
 </html>
