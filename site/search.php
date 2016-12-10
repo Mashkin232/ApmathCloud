@@ -175,13 +175,12 @@ return $result;
 $search = new GoogleCustomSearch('012801828530494578547:7ddq3fkh7ew', 'AIzaSyD7Vffkn2jWpPwwfSwHrVhMH4dBHGSl_AA'); 
  echo"<form action="poisk.php" method="post">
 	<table> <tr>
-			<td style="border:0px" colspan="2">Поиск:<input value="" name="poisk">
+			<td style="border:0px" colspan="2"><input value="" name="poisk">
 			<button><font size=+1>Поиск</font></button>
-			</form>
 			</td>	
 		</tr>
-		</table>
-		</form>";
+	</table>
+	</form>";
 $results = $search->search('Tallinn Hotels'); 
 foreach ($results->results as $result) { 
 echo $result['link']; 
