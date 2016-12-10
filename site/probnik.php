@@ -29,7 +29,7 @@ namespace iMarc;
  *
  * Usage:
  *
- * $search = new iMarc\GoogleCustomSearch(SEARCH_ENGINE_ID, API_KEY);
+ * $search = new iMarc\GoogleCustomSearch(012801828530494578547:7ddq3fkh7ew, AIzaSyD7Vffkn2jWpPwwfSwHrVhMH4dBHGSl_AA);
  * $results = $search->search('Apples');
  *
  * @copyright iMarc LLC 2015
