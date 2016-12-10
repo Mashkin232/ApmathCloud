@@ -1,9 +1,4 @@
- <html>
-  <head>
-   <title>Тестируем PHP</title>
-  </head>
-  <body>
-  <?php echo '<p> hello </p>'; ?>
+
   <?php
 
          $search =str_replace(' ', '+', @$_GET["q"]);
@@ -39,5 +34,4 @@
             $i+=8;
          }
 ?>
-  </body>
-</html>
+
