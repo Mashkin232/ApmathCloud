@@ -1,0 +1,167 @@
+<? PHP
+Пространство имен  iMarc ;
+/ **
+ * Google Custom Search
+ *
+ * PHP-интерфейс к API Google Custom Search JSON
+ *
+ * Документация по API Google Custom Search JSON
+ * https://developers.google.com/custom-search/json-api/v1/overview
+ *
+ * Применение:
+ *
+ * $ = Новый поиск iMarc \ GoogleCustomSearch (SEARCH_ENGINE_ID, api_key);
+ * $ Результаты = $ поисково-> поиска ( 'Яблоки');
+ *
+* @copyright IMarc LLC 2015
+* @author Джефф Теркотт <jeff@imarc.net>
+* @author Dan Collins <dan@imarc.net>
+* @version 2.0.0
+ * 
+* @license MIT
+** /
+класс  GoogleCustomSearch
+{
+    / **
+     * Google Search Engine ID
+     *
+     * @var Строка
+     ** /
+    защищенный  $ search_engine_id ;
+    / **
+     * Google API Key
+     *
+     * @var Строка
+     ** /
+    защищенный  $ api_key ;
+    / **
+     * Конструктор
+     *
+     * @param Строка search_engine_id Search Engine ID
+     * @param Строка api_key ключ API
+     * @return Недействительным
+     ** /
+    общественная  функция  __construct ( $ search_engine_id , $ api_key )
+    {
+        $ это -> search_engine_id  =  $ search_engine_id ;
+        $ это -> api_key  =  $ api_key ;
+    }
+    / **
+     * Отправляет запрос поиска в Google
+     *
+     * @param Массив Params параметры запроса поиска
+     * @return Объект Необработанные результаты поискового запроса
+     ** /
+    частная  функция  запроса ( $ PARAMS )
+    {
+        $ PARAMS  =  array_merge (
+            $ PARAMS ,
+            [
+                ' Ключ '  =>  $ это -> api_key ,
+                ' Сх '  =>  $ это -> search_engine_id
+            ]
+        );
+        // Отключение проверки равный
+        $ контекст  =  stream_context_create ([
+            ' HTTP '  => [
+                ' Ignore_errors '  =>  верно
+            ],
+            ' SSL '  => [
+                ' Verify_peer '  =>  ложно ,
+                ' Verify_peer_name '  =>  ложно ,
+            ]
+        ]);
+        // Использовать Curl, если доступна, в противном случае возврат к file_get_contents
+        если ( function_exists ( ' curl_version ' )) {
+            $ ответ  =  $ это -> getSslPage ( ' https://www.googleapis.com/customsearch/v1? '  .  http_build_query ( $ PARAMS ));
+        } Еще {
+            $ ответ  =  file_get_contents ( ' https://www.googleapis.com/customsearch/v1? '  .  http_build_query ( $ PARAMS ), ложь , контекст $ )
+        }
+        вернуть  json_decode ( $ ответов );
+    }
+    / **
+     * Выполнить поиск
+     *
+     * Возвращает объект со следующими свойствами:
+     *
+     * страница
+     * на страницу
+     * Начало
+     * конец
+     * totalResults
+     * Результаты
+     * заглавие
+     * сниппет
+     * htmlSnippet
+     * ссылка
+     * изображение
+     * миниатюрами
+     *
+     * @param Строка термины Поисковые термины
+     * @param Целое страница страница для возврата
+     * @param Целое per_page Сколько результатов к Dispaly на странице
+     * @param Массив дополнительных Дополнительные параметры для передачи в Google
+     * @return Объект Результаты поиска
+     * @throws Исключение Если ошибка возвращается из Google
+     ** /
+    общественная  функция  поиска ( $ термины , $ страница = 1 , $ per_page = 10 , $ экстра = [])
+    {
+        // Google допускает только 10 результатов, в то время,
+        $ per_page  = ( $ per_page  >  10 )? 10 : $ per_page ;
+        
+        $ PARAMS  = [
+            ' Q '  =>  $ термины ,
+            ' Начинать '  => (( $ страница  -  1 ) *  $ per_page ) +  1 ,
+            ' Num '  =>  $ per_page
+        ];
+        если ( SizeOf ( $ экстра )) {
+            $ PARAMS  =  array_merge ( $ PARAMS , $ экстра );
+        }
+        $ ответ  =  $ это -> запрос ( Params $ );
+        если ( Исеть ( $ ответ -> ошибка )) {
+            бросить  новый  \ Exception ( $ ответ -> ошибка -> сообщение );
+        }
+        
+        $ request_info  =  $ ответ -> запросы -> запрос [ 0 ];
+        
+        $ Результаты  =  новый  \ StdClass ();
+        $ Результаты -> страница  =  $ страница ;
+        $ Результаты -> perPage  =  $ per_page ;
+        $ Результаты -> начать  =  $ request_info -> StartIndex ;
+        $ Результаты -> конец  = ( $ request_info -> StartIndex  +  $ request_info -> счетчик ) -  1 ;
+        $ Результаты -> totalResults  =  $ request_info -> totalResults ;
+        $ Результаты -> Результаты  = [];
+        если ( Исеть ( $ ответ -> элементы )) {
+            Еогеасп ( $ ответ -> элементы  как  $ результат ) {
+                $ Результаты -> Результаты [] = ( объект ) [
+                    ' Название '  =>  $ результат -> название ,
+                    ' Сниппет '  =>  $ результат -> сниппет ,
+                    ' HtmlSnippet '  =>  $ результат -> htmlSnippet ,
+                    ' Ссылка '  =>  $ результат -> ссылка ,
+                    ' Образ '  =>  Исеть ( $ результат -> PageMap -> cse_image )? $ результат -> PageMap -> cse_image [ 0 ] -> ЦСИ : ' ' ,
+                    ' Эскиз '  =>  Исеть ( $ результат -> PageMap -> cse_thumbnail )? $ результат -> PageMap -> cse_thumbnail [ 0 ] -> ЦСИ : ' ' ,
+                ];
+            }   
+        }
+        
+        вернуть  $ результатов ;
+    }
+    / **
+     * Разрешить вызов API под протокол HTTPS с помощью Curl - функцию замены для file_get_contents
+     * Установив CURLOPT_RETURNTRANSFER к истине мы можем принести результаты через Curl
+     * @param Строка $ URL
+     * @return Объект $ Результаты
+     * /
+    общественная  функция  getSslPage ( $ URL ) {
+        $ ч  =  curl_init ();
+        curl_setopt ( $ ч , CURLOPT_SSL_VERIFYPEER , FALSE );
+        curl_setopt ( $ ч , CURLOPT_HEADER , ложь );
+        curl_setopt ( $ ч , CURLOPT_FOLLOWLOCATION , правда );
+        curl_setopt ( $ ч , CURLOPT_URL , $ URL );
+        curl_setopt ( $ ч , CURLOPT_REFERER , $ URL );
+        curl_setopt ( $ ч , CURLOPT_RETURNTRANSFER , значение TRUE );
+        $ результат  =  curl_exec ( $ ч );
+        curl_close ( $ ч );
+        вернуть  $ результат ;
+    }
+}
