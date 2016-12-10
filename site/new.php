@@ -16,12 +16,14 @@
 
             echo "<b>Result ".($x+1)."</b>";
             echo "<br>URL: ";
-           
-            <a href="<?php echo $json->responseData->results[$x]->url; ?>" target="_blank"> <?php echo $json->responseData->results[$x]->url; ?> </a>
+           ?>
+            <a href="<?php echo $json->responseData->results[$x]->url; ?>" target="_blank"> 
+              <?php echo $json->responseData->results[$x]->url; ?> </a>
             <?php
             echo "<br>VisibleURL: ";
             ?>
-            <a href="http://<?php echo $json->responseData->results[$x]->visibleUrl; ?>" target="_blank"> <?php echo $json->responseData->results[$x]->visibleUrl; ?> </a>
+            <a href="http://<?php echo $json->responseData->results[$x]->visibleUrl; ?>" target="_blank">
+              <?php echo $json->responseData->results[$x]->visibleUrl; ?> </a>
             <?php
 
             echo "<br>Title: ";
