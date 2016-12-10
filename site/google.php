@@ -3,9 +3,7 @@
     <title> php</title>
   </head>
   <body>
-    <?php 
-    echo '<p>hello world</p>';
-    ?>
+   
     <?php
 //Получаем настройки поискового запроса
 //$data    = MyDB::get() -> selectOne('*',self::TABLE,'`id_mod` = '.$this->id_mod);
