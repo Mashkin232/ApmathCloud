@@ -176,7 +176,7 @@ $search = new GoogleCustomSearch('012801828530494578547:7ddq3fkh7ew', 'AIzaSyD7V
 $results = $search->search('Comment'); 
 foreach ($results->results as $result) { 
 echo $result['link']; 
-
+  echo "</br>";
 } 
 
 ?> 
