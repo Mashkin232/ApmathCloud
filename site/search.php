@@ -173,7 +173,8 @@ return $result;
 } 
 } 
 $search = new GoogleCustomSearch('012801828530494578547:7ddq3fkh7ew', 'AIzaSyD7Vffkn2jWpPwwfSwHrVhMH4dBHGSl_AA'); 
-$results = $search->search('Tallinn hotels'); 
+  
+$results = $search->search('Tallinn Hotels'); 
 foreach ($results->results as $result) { 
 echo $result['link']; 
   echo "</br>";
