@@ -1,4 +1,12 @@
-<?php
+<html>
+  <head>
+    <title> php</title>
+  </head>
+  <body>
+    <?php 
+    echo "hello world";
+    ?>
+    <?php
 //Получаем настройки поискового запроса
 $data    = MyDB::get() -> selectOne('*',self::TABLE,'`id_mod` = '.$this->id_mod);
 
