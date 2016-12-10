@@ -3,6 +3,7 @@
    <title>Тестируем PHP</title>
   </head>
   <body>
+  <?php echo '<p> hello </p>'; ?>
   <?php
 
          $search =str_replace(' ', '+', @$_GET["q"]);
